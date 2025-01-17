@@ -20,6 +20,9 @@ signals:
 
 private:
     void initUi();
+    void connectFun();
+private slots:
+    void slotFaceRecognition();
 private:
     MrzMyGameWidget *m_pMrzMyGame[100];
     MrzMyGameWidget *m_pMrzMyExam[100];

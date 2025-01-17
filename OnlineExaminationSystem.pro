@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     View/OnlineExam/mrzfaceidentificationwidget.cpp \
+    View/OnlineExam/mrzfacerecognitiondialog.cpp \
     View/OnlineExam/mrzmygametitlebar.cpp \
     View/OnlineExam/mrzmygamwidget.cpp \
     View/OnlineExam/mrzonlineexamwidget.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 
 HEADERS += \
     View/OnlineExam/mrzfaceidentificationwidget.h \
+    View/OnlineExam/mrzfacerecognitiondialog.h \
     View/OnlineExam/mrzmygametitlebar.h \
     View/OnlineExam/mrzmygamwidget.h \
     View/OnlineExam/mrzonlineexamwidget.h \

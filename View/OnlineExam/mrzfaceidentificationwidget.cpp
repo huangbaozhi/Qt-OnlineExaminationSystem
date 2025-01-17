@@ -2,4 +2,6 @@
 
 MrzFaceIdentificationWidget::MrzFaceIdentificationWidget(QWidget *parent)
     : QWidget{parent}
-{}
+{
+
+}

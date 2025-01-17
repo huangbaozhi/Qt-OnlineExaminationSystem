@@ -47,6 +47,8 @@ MrzMyGameWidget::MrzMyGameWidget(QWidget *parent)
 {
     this->setFixedSize(290, 538);
     initUi();
+
+    connectFun();
 }
 
 MrzMyGameWidget::MrzMyGameWidget(const QString &title,
@@ -355,6 +357,11 @@ void MrzMyGameWidget::initUi(const QString &title, const QDateTime &startTime, c
 
     pMainLyt->addWidget(pImageWgt);
     pMainLyt->addLayout(pVLyt);
+}
+
+void MrzMyGameWidget::connectFun()
+{
+    connect(m_pButton, &QPushButton::clicked, this, &MrzMyGameWidget::signEnterExaminationRoom);
 }
 
 void MrzMyGameWidget::setExamTitleName(QString title)

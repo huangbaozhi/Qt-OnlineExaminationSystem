@@ -14,6 +14,7 @@ public:
     MrzMyGameWidget(const QString &title, const QDateTime &startTime, const QDateTime &endTime, int duration, int questions, int score, QWidget *parent = nullptr);
 
 signals:
+    void signEnterExaminationRoom();
 
 public:
     void setExamTitleName(QString title);
@@ -22,6 +23,7 @@ public:
 private:
     void initUi();
     void initUi(const QString &title, const QDateTime &startTime, const QDateTime &endTime, int duration, int questions, int score);
+    void connectFun();
 
 private:
     QPushButton *m_pButton;

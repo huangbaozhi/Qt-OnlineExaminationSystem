@@ -15,12 +15,15 @@ public:
 signals:
 
 public:
+    void setTitleBackGround(QString background);
     void setTitleName(QString title);
 
 private:
     void initUi();
 
 private:
+    QWidget *m_pBackgroundWgt;
+    QLabel  *m_pLogoLbl;
     QLabel  *m_pTitleLbl;
 
     QPushButton *m_pUnderWayBtn;

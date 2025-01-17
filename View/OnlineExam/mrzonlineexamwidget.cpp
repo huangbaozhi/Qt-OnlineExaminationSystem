@@ -1,6 +1,7 @@
 #include "mrzonlineexamwidget.h"
 #include "View/OnlineExam/mrzmygamwidget.h"
 #include "View/OnlineExam/mrzmygametitlebar.h"
+#include "View/OnlineExam/mrzfacerecognitiondialog.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -15,6 +16,7 @@ MrzOnlineExamWidget::MrzOnlineExamWidget(QWidget *parent)
 {
     setMinimumSize(1250, 964);
     initUi();
+    connectFun();
 }
 
 static MrzOnlineExamWidget *G_MrzOnlineExamWidget = nullptr;
@@ -35,6 +37,7 @@ void MrzOnlineExamWidget::initUi()
 
     // 我的大赛
     m_pMyGame = new MrzMyGameTitleBar;
+    m_pMyGame->setTitleBackGround("QWidget{border-image: url(:/image/icon/backgroud_mygame.png);background: transparent;}");
     m_pMyGame->setTitleName("我的大赛");
     pMainLyt->addWidget(m_pMyGame);
 
@@ -55,6 +58,7 @@ void MrzOnlineExamWidget::initUi()
 
     // 我的考试
     m_pMyExam = new MrzMyGameTitleBar;
+    m_pMyExam->setTitleBackGround("QWidget{border-image: url(:/image/icon/backgroud_my_exam.png);background: transparent;}");
     m_pMyExam->setTitleName("我的考试");
     pMainLyt->addWidget(m_pMyExam);
 
@@ -74,6 +78,7 @@ void MrzOnlineExamWidget::initUi()
 
     // 我的练习
     m_pMyExercise = new MrzMyGameTitleBar;
+    m_pMyExercise->setTitleBackGround("QWidget{border-image: url(:/image/icon/backgroud_my_exercise.png);background: transparent;}");
     m_pMyExercise->setTitleName("我的练习");
     pMainLyt->addWidget(m_pMyExercise);
 
@@ -105,4 +110,15 @@ void MrzOnlineExamWidget::initUi()
     pScrollLyt->addStretch();
     pScrollLyt->addWidget(scrollArea);
     pScrollLyt->addStretch();
+}
+
+void MrzOnlineExamWidget::connectFun()
+{
+    connect(m_pMrzMyGame[0], &MrzMyGameWidget::signEnterExaminationRoom, this, &MrzOnlineExamWidget::slotFaceRecognition);
+}
+
+void MrzOnlineExamWidget::slotFaceRecognition()
+{
+    MrzFaceRecognitionDialog faceRecognitionDialog;
+    faceRecognitionDialog.exec();
 }

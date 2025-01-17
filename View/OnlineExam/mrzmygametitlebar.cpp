@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 const QString styleLabel = QString("QLabel{line-height: 29px;"
-                                    "color: rgb(16,16,16);"
+                                   "color: rgba(255,255,255,1);"
                                     "font-size: 20px;"
                                     "text-align: left;"
                                     "font-family: SourceHanSansSC-regular;}");
@@ -28,13 +28,31 @@ MrzMyGameTitleBar::MrzMyGameTitleBar(QWidget *parent)
     initUi();
 }
 
+
 void MrzMyGameTitleBar::initUi()
 {
     QHBoxLayout *pTitleLyt = new QHBoxLayout(this);
+    pTitleLyt->setContentsMargins(0, 0, 0, 0);
+
+    m_pBackgroundWgt = new QWidget;
+    m_pBackgroundWgt->setFixedHeight(60);
+    m_pBackgroundWgt->setStyleSheet("QWidget{border-image: url(:/image/icon/backgroud_mygame.png);background: transparent;}");
+
+    QHBoxLayout *pBackGroundLyt = new QHBoxLayout(m_pBackgroundWgt);
+    pBackGroundLyt->setContentsMargins(0, 0, 0, 0);
+
+    m_pLogoLbl = new QLabel(this);
+    m_pLogoLbl->setFixedSize(30, 30);
+    m_pLogoLbl->setStyleSheet("QLabel{border-image: url(:/image/icon/trophy.png);}");
+
     m_pTitleLbl = new QLabel;
-    //m_pTitleLbl->setText("我的大赛");
     m_pTitleLbl->setStyleSheet(styleLabel);
-    m_pTitleLbl->setFixedSize(180, 60);
+
+    pBackGroundLyt->addStretch();
+    pBackGroundLyt->addWidget(m_pLogoLbl);
+    pBackGroundLyt->addSpacing(19);
+    pBackGroundLyt->addWidget(m_pTitleLbl);
+    pBackGroundLyt->addStretch();
 
     m_pUnderWayBtn = new QPushButton(this);
     m_pUnderWayBtn->setText("进行中");
@@ -76,7 +94,8 @@ void MrzMyGameTitleBar::initUi()
     m_pAlreadyEndedBtn->setStyleSheet(styleButton);
     m_pAlreadyEndedBtn->setFixedSize(48, 60);
 
-    pTitleLyt->addWidget(m_pTitleLbl);
+    //pTitleLyt->addWidget(m_pTitleLbl);
+    pTitleLyt->addWidget(m_pBackgroundWgt);
     pTitleLyt->addSpacing(45);
     pTitleLyt->addWidget(m_pUnderWayBtn);
     pTitleLyt->addSpacing(30);
@@ -94,6 +113,11 @@ void MrzMyGameTitleBar::initUi()
     pTitleLyt->addSpacing(30);
     pTitleLyt->addWidget(m_pAlreadyEndedBtn);
     pTitleLyt->addStretch();
+}
+
+void MrzMyGameTitleBar::setTitleBackGround(QString background)
+{
+    m_pBackgroundWgt->setStyleSheet(background);
 }
 
 void MrzMyGameTitleBar::setTitleName(QString title)
