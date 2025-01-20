@@ -22,10 +22,10 @@ private:
 private:
 
     QPushButton *m_pCloseBtn;
-    QPushButton *m_pDirectCameraBtn;
-    QPushButton *m_pWellLitBtn;
-    QPushButton *m_pFaceNoCoverBtn;
-    QPushButton *pStartVerificationBtn;
+    // QPushButton *m_pDirectCameraBtn;
+    // QPushButton *m_pWellLitBtn;
+    // QPushButton *m_pFaceNoCoverBtn;
+     QPushButton *pStartVerificationBtn;
 
 };
 

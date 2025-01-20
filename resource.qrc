@@ -19,5 +19,12 @@
         <file>image/icon/registered.png</file>
         <file>image/icon/signing_up.png</file>
         <file>image/icon/trophy.png</file>
+        <file>image/icon/Camera_dialog.png</file>
+        <file>image/icon/face_unobstructed_dialog.png</file>
+        <file>image/icon/plenty_light_dialog.png</file>
+        <file>image/button/close_button.png</file>
+        <file>image/button/collection_button.png</file>
+        <file>image/icon/cell_image.png</file>
+        <file>image/icon/time_image.png</file>
     </qresource>
 </RCC>

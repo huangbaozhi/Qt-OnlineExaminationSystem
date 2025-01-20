@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    View/OnlineExam/mrzexaminationwidget.cpp \
+    View/OnlineExam/mrzexampaperpagewidget.cpp \
     View/OnlineExam/mrzfaceidentificationwidget.cpp \
     View/OnlineExam/mrzfacerecognitiondialog.cpp \
     View/OnlineExam/mrzmygametitlebar.cpp \
@@ -18,10 +20,13 @@ SOURCES += \
     View/OnlineExercise/mrzmyexercisewidget.cpp \
     View/OnlineExercise/mrzonlineexercisewidget.cpp \
     View/mrztitlebar.cpp \
+    View/subassembly/mrzcamerafacedisplaywidget.cpp \
     main.cpp \
     mainwidget.cpp
 
 HEADERS += \
+    View/OnlineExam/mrzexaminationwidget.h \
+    View/OnlineExam/mrzexampaperpagewidget.h \
     View/OnlineExam/mrzfaceidentificationwidget.h \
     View/OnlineExam/mrzfacerecognitiondialog.h \
     View/OnlineExam/mrzmygametitlebar.h \
@@ -31,6 +36,7 @@ HEADERS += \
     View/OnlineExercise/mrzmyexercisewidget.h \
     View/OnlineExercise/mrzonlineexercisewidget.h \
     View/mrztitlebar.h \
+    View/subassembly/mrzcamerafacedisplaywidget.h \
     mainwidget.h
 
 # Default rules for deployment.
