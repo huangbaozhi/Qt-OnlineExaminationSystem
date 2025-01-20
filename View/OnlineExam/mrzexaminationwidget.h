@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+class MrzAnswerSheetWidget;
+class MrzExamPaperPageWidget;
+class MrzExamPaperTitleWidget;
+
 class MrzExaminationWidget : public QWidget
 {
     Q_OBJECT
@@ -16,6 +20,9 @@ private:
 
 private:
 
+    MrzAnswerSheetWidget *m_pAnswerSheetWidget;
+    MrzExamPaperPageWidget *m_pExamPaperPageWidget;
+    MrzExamPaperTitleWidget *m_pExamPaperTitleWidget;
 };
 
 #endif // MRZEXAMINATIONWIDGET_H

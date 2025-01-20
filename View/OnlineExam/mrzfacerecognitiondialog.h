@@ -6,6 +6,7 @@
 
 class QPushButton;
 class QLabel;
+class MrzExaminationWidget;
 
 class MrzFaceRecognitionDialog : public QDialog
 {
@@ -19,13 +20,18 @@ private:
     void initUi();
     void connectFun();
 
+private slots:
+    void slotStartExam();
+
 private:
 
     QPushButton *m_pCloseBtn;
     // QPushButton *m_pDirectCameraBtn;
     // QPushButton *m_pWellLitBtn;
     // QPushButton *m_pFaceNoCoverBtn;
-     QPushButton *pStartVerificationBtn;
+    QPushButton *m_pStartVerificationBtn;
+
+    MrzExaminationWidget *m_pExaminationWidget;
 
 };
 

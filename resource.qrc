@@ -26,5 +26,10 @@
         <file>image/button/collection_button.png</file>
         <file>image/icon/cell_image.png</file>
         <file>image/icon/time_image.png</file>
+        <file>image/button/select_no_checkbox.png</file>
+        <file>image/button/select_ok_checkbox.png</file>
+        <file>image/icon/answer_status_current.png</file>
+        <file>image/icon/answer_status_no.png</file>
+        <file>image/icon/answer_status_ok.png</file>
     </qresource>
 </RCC>

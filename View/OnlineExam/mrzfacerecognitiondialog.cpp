@@ -1,5 +1,7 @@
 #include "mrzfacerecognitiondialog.h"
 #include "View/subassembly/mrzcamerafacedisplaywidget.h"
+#include "View/OnlineExam/mrzanswersheetwidget.h"
+#include "View/OnlineExam/mrzexaminationwidget.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -56,6 +58,7 @@ MrzFaceRecognitionDialog::MrzFaceRecognitionDialog(QWidget *parent)
 {
     setMinimumSize(429, 657);
     initUi();
+    connectFun();
 }
 
 void MrzFaceRecognitionDialog::initUi()
@@ -200,12 +203,12 @@ void MrzFaceRecognitionDialog::initUi()
 
     QHBoxLayout *pVerifyLyt = new QHBoxLayout;
     pVerifyLyt->setContentsMargins(0, 0, 0, 0);
-    pStartVerificationBtn = new QPushButton;
-    pStartVerificationBtn->setFixedSize(268, 46);
-    pStartVerificationBtn->setText("开始验证");
-    pStartVerificationBtn->setStyleSheet(styleVerifyButton);
+    m_pStartVerificationBtn = new QPushButton;
+    m_pStartVerificationBtn->setFixedSize(268, 46);
+    m_pStartVerificationBtn->setText("开始验证");
+    m_pStartVerificationBtn->setStyleSheet(styleVerifyButton);
     pVerifyLyt->addStretch();
-    pVerifyLyt->addWidget(pStartVerificationBtn);
+    pVerifyLyt->addWidget(m_pStartVerificationBtn);
     pVerifyLyt->addStretch();
 
     //pMainLyt->addLayout(pTitleLyt);
@@ -223,5 +226,12 @@ void MrzFaceRecognitionDialog::initUi()
 
 void MrzFaceRecognitionDialog::connectFun()
 {
+    connect(m_pStartVerificationBtn, &QPushButton::clicked, this, &MrzFaceRecognitionDialog::slotStartExam);
+}
 
+void MrzFaceRecognitionDialog::slotStartExam()
+{
+    m_pExaminationWidget = new MrzExaminationWidget;
+    m_pExaminationWidget->show();
+    this->hide();
 }
