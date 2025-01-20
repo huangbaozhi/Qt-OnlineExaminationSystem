@@ -17,6 +17,12 @@ signals:
 private:
     void initUi();
 
+public:
+    void setStyleImage(QString style);
+    void setTitle(QString title);
+    void setQuestionNum(int number);
+    void setClear(QString clear);
+
 private:
     QLabel *m_pLogoLbl;
     QLabel *m_pTitleLbl;

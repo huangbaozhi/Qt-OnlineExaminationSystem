@@ -93,3 +93,25 @@ void MrzExerciseButton::initUi()
     pMyExerciseLyt->addWidget(m_pClearBtn);
     pMyExerciseLyt->addStretch();
 }
+
+void MrzExerciseButton::setStyleImage(QString style)
+{
+    m_pLogoLbl->setStyleSheet(style);
+    QString styleSheet = QString("QLabel{border-image: url(%1);}").arg(style);
+    m_pLogoLbl->setStyleSheet(styleSheet);
+}
+
+void MrzExerciseButton::setTitle(QString title)
+{
+    m_pTitleLbl->setText(title);
+}
+
+void MrzExerciseButton::setQuestionNum(int number)
+{
+    m_pQuestionNumLbl->setText(QString::number(number) + "道");
+}
+
+void MrzExerciseButton::setClear(QString clear)
+{
+    m_pClearBtn->setText(clear);
+}

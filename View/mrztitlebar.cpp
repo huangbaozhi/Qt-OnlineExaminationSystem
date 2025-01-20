@@ -74,9 +74,10 @@ void mrzTitleBarWidget::initUi()
     m_pExerciseOnlineBtn->setFixedHeight(60);
     m_pExerciseOnlineBtn->setStyleSheet(styleButton);
 
-    m_pProgressLbl = new QLabel(this);
-    m_pProgressLbl->setStyleSheet("QLabel{border-image: url(:/image/LOGO.png);}");
-    m_pProgressLbl->setFixedSize(60, 60);
+    m_pPersonCenterBtn = new QPushButton(this);
+    m_pPersonCenterBtn->setObjectName("PersonCenter Button");
+    m_pPersonCenterBtn->setStyleSheet("QPushButton{border-image: url(:/image/LOGO.png);border:0px groove gray;}");
+    m_pPersonCenterBtn->setFixedSize(60, 60);
 
     phLyt->addWidget(m_pLogoLbl);
     phLyt->addSpacing(24);
@@ -86,10 +87,11 @@ void mrzTitleBarWidget::initUi()
     phLyt->addSpacing(40);
     phLyt->addWidget(m_pExerciseOnlineBtn);
     phLyt->addStretch();
-    phLyt->addWidget(m_pProgressLbl);
+    phLyt->addWidget(m_pPersonCenterBtn);
 
     m_pOnlineExamBtn->setCheckable(true);
     m_pExerciseOnlineBtn->setCheckable(true);
+    m_pPersonCenterBtn->setCheckable(true);
 
     m_pOnlineExamBtn->setChecked(true);
 }
@@ -98,6 +100,7 @@ void mrzTitleBarWidget::connectFun()
 {
     connect(m_pOnlineExamBtn, &QPushButton::toggled, this, &mrzTitleBarWidget::slotOnlineButtonToggled);
     connect(m_pExerciseOnlineBtn, &QPushButton::toggled, this, &mrzTitleBarWidget::slotOnlineButtonToggled);
+    connect(m_pPersonCenterBtn, &QPushButton::toggled, this, &mrzTitleBarWidget::slotOnlineButtonToggled);
 }
 
 void mrzTitleBarWidget::slotOnlineButtonToggled(bool ckecked)
@@ -110,12 +113,20 @@ void mrzTitleBarWidget::slotOnlineButtonToggled(bool ckecked)
             if (pBtn->objectName() == "OnlineExam Button")
             {
                 m_pExerciseOnlineBtn->setChecked(false);
+                m_pPersonCenterBtn->setChecked(false);
                 emit signOnlineExam("OnlineExam");
             }
-            else
+            else if (pBtn->objectName() == "OnlineExercise Button")
             {
                 m_pOnlineExamBtn->setChecked(false);
+                m_pPersonCenterBtn->setChecked(false);
                 emit signOnlineExercise("OnlineExercise");
+            }
+            else if (pBtn->objectName() == "PersonCenter Button")
+            {
+                m_pExerciseOnlineBtn->setChecked(false);
+                m_pOnlineExamBtn->setChecked(false);
+                emit signPersonCenter("PersonCenter");
             }
         }
     }

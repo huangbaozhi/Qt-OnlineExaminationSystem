@@ -6,6 +6,7 @@
 class mrzTitleBarWidget;
 class MrzOnlineExamWidget;
 class MrzOnlineExerciseWidget;
+class MrzPersonalCenterWidget;
 class QStackedWidget;
 
 class MainWidget : public QWidget
@@ -27,6 +28,7 @@ private:
     mrzTitleBarWidget *m_pMrzTitleBarWidget;
     MrzOnlineExamWidget *m_pMrzOnlineExamWidget;
     MrzOnlineExerciseWidget *m_pMrzOnlineExerciseWidget;
+    MrzPersonalCenterWidget *m_pMrzPersonalCenterWidget;
 
     QStackedWidget *m_pStackedWidget;
 

@@ -18,6 +18,7 @@ SOURCES += \
     View/OnlineExam/mrzmygametitlebar.cpp \
     View/OnlineExam/mrzmygamwidget.cpp \
     View/OnlineExam/mrzonlineexamwidget.cpp \
+    View/OnlineExam/mrzquestionwidget.cpp \
     View/OnlineExercise/mrzexercisebutton.cpp \
     View/OnlineExercise/mrzmyexercisewidget.cpp \
     View/OnlineExercise/mrzonlineexercisewidget.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     View/OnlineExam/mrzmygametitlebar.h \
     View/OnlineExam/mrzmygamwidget.h \
     View/OnlineExam/mrzonlineexamwidget.h \
+    View/OnlineExam/mrzquestionwidget.h \
     View/OnlineExercise/mrzexercisebutton.h \
     View/OnlineExercise/mrzmyexercisewidget.h \
     View/OnlineExercise/mrzonlineexercisewidget.h \

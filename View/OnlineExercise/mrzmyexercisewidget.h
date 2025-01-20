@@ -30,9 +30,9 @@ private:
     QLabel *m_pTitleLbl;
     QTableWidget *m_pTableWidget;
 
-    MrzExerciseButton *m_pMrzExerciseButton[5];
+    MrzExerciseButton *m_pMrzExerciseButton;
 
-    MrzExerciseButton *m_pMrzSpecialExerciseButton[5];
+    MrzExerciseButton *m_pMrzSpecialExerciseButton;
 };
 
 #endif // MRZMYEXERCISEWIDGET_H

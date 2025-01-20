@@ -2,6 +2,7 @@
 #include "View/mrztitlebar.h"
 #include "View/OnlineExam/mrzonlineexamwidget.h"
 #include "View/OnlineExercise/mrzonlineexercisewidget.h"
+#include "View/PersonalCenter/mrzpersonalcenterwidget.h"
 
 #include <QHBoxLayout>
 #include <QBoxLayout>
@@ -36,10 +37,12 @@ void MainWidget::initUi()
 
     m_pMrzOnlineExamWidget = new MrzOnlineExamWidget;
     m_pMrzOnlineExerciseWidget = new MrzOnlineExerciseWidget;
+    m_pMrzPersonalCenterWidget = new MrzPersonalCenterWidget;
 
     m_pStackedWidget = new QStackedWidget(this);
     m_pStackedWidget->addWidget(m_pMrzOnlineExamWidget);
     m_pStackedWidget->addWidget(m_pMrzOnlineExerciseWidget);
+    m_pStackedWidget->addWidget(m_pMrzPersonalCenterWidget);
     m_pStackedWidget->setCurrentWidget(m_pMrzOnlineExamWidget);
 
     pMainLyt->addWidget(m_pStackedWidget);
@@ -49,6 +52,7 @@ void MainWidget::connectFun()
 {
     connect(m_pMrzTitleBarWidget, &mrzTitleBarWidget::signOnlineExam, this, &MainWidget::turnPages);
     connect(m_pMrzTitleBarWidget, &mrzTitleBarWidget::signOnlineExercise, this, &MainWidget::turnPages);
+    connect(m_pMrzTitleBarWidget, &mrzTitleBarWidget::signPersonCenter, this, &MainWidget::turnPages);
 }
 
 void MainWidget::turnPages(QString onlineStatus)
@@ -60,6 +64,10 @@ void MainWidget::turnPages(QString onlineStatus)
     else if (onlineStatus== "OnlineExercise" && m_pMrzOnlineExerciseWidget)
     {
         m_pStackedWidget->setCurrentWidget(m_pMrzOnlineExerciseWidget);
+    }
+    else if (onlineStatus== "PersonCenter" && m_pMrzPersonalCenterWidget)
+    {
+        m_pStackedWidget->setCurrentWidget(m_pMrzPersonalCenterWidget);
     }
 
 }

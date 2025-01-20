@@ -176,7 +176,7 @@ void MrzAnswerSheetWidget::initUi()
 
     // 考生信息
     QWidget *pCandidateInfoWgt = new QWidget;
-    pCandidateInfoWgt->setFixedSize(302, 301);
+    pCandidateInfoWgt->setFixedSize(302, 310);
     pCandidateInfoWgt->setStyleSheet("QWidget{"
                               "line-height: 20px;"
                               "border-radius: 10px;"
@@ -249,6 +249,7 @@ void MrzAnswerSheetWidget::initUi()
     pCandidateInfoLyt->addLayout(pHCandidateInfoLyt);
     pCandidateInfoLyt->addSpacing(20);
     pCandidateInfoLyt->addLayout(pCandidateImgLyt);
+    pCandidateInfoLyt->addStretch();
     pCandidateInfoLyt->addSpacing(15);
     pCandidateInfoLyt->addLayout(pNameLyt);
     pCandidateInfoLyt->addSpacing(15);

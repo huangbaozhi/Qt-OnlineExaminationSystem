@@ -8,6 +8,7 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QList>
+#include <QMap>
 
 const QString styleLabel = QString("QLabel{"
                                    "line-height: 29px;"
@@ -15,11 +16,52 @@ const QString styleLabel = QString("QLabel{"
                                     "font-size: 20px;"
                                     "text-align: left;"
                                     "font-family: SourceHanSansSC-regular;"
-                                    "border-bottom: 1px solid rgba(0,0,0,0.1);;"
+                                    "border-bottom: 1px solid rgba(0,0,0,0.1);"
                                     "border-left: none;"
                                     "border-top: none;"
                                     "border-right: none;}"
                                    );
+
+const QString stylePracticeData = QString("QLabel{"
+                                   "line-height: 29px;"
+                                   "color: rgb(58,62,81);"
+                                   "font-size: 20px;"
+                                   "text-align: left;"
+                                   "font-family: SourceHanSansSC-regular;"
+                                   "border: 3px solid rgba(56,148,255,1);"
+                                   "border-left: none;"
+                                   "border-top: none;"
+                                   "border-right: none;}"
+                                   );
+
+const QString stylePracticeDataLabel = QString("QLabel{"
+                                   "line-height: 29px;"
+                                   "color: rgb(58,62,81);"
+                                   "font-size: 20px;"
+                                   "text-align: left;"
+                                   "font-family: SourceHanSansSC-regular;"
+                                   "border-bottom: none;"
+                                   "border-left: none;"
+                                   "border-top: none;"
+                                   "border-right: none;}"
+                                   );
+
+const QString styleTimeLabel = QString("QLabel{"
+                                       "line-height: 24px;"
+                                       "color: rgba(58,62,81,0.8);"
+                                       "font-size: 16px;"
+                                       "text-align: left;"
+                                       "font-family: SourceHanSansSC-regular;"
+                                       "border-bottom: none;"
+                                       "border-left: none;"
+                                       "border-top: none;"
+                                       "border-right: none;}");
+
+const QString styleDayPracticeTime = QString("QLabel{line-height: 24px;"
+                                       "color: rgba(58,62,81,0.8);"
+                                       "font-size: 16px;"
+                                       "text-align: left;"
+                                       "font-family: SourceHanSansSC-regular;}");
 
 MrzMyExerciseWidget::MrzMyExerciseWidget(QWidget *parent)
     : QWidget{parent}
@@ -59,10 +101,21 @@ void MrzMyExerciseWidget::initUi()
     QHBoxLayout *pExerciseButtonLyt = new QHBoxLayout;
     pExerciseButtonLyt->setContentsMargins(0, 0, 0, 0);
 
-    for (int i = 0; i < 3; ++i)
+    // 使用 QList 保存插入顺序
+    QList<QPair<QString, QString>> items;
+    items.append(qMakePair(QString("我的笔记"), QString(":/image/icon/my_notes.png")));
+    items.append(qMakePair(QString("我的收藏"), QString(":/image/icon/my_favorite.png")));
+    items.append(qMakePair(QString("我的错题"), QString(":/image/icon/my_error.png")));
+
+    // 从最后一个元素开始反向遍历
+    for (auto it = items.end(); it != items.begin(); )
     {
-        m_pMrzExerciseButton[i] = new MrzExerciseButton;
-        pExerciseButtonLyt->addWidget(m_pMrzExerciseButton[i]);
+        --it;  // 先移动到上一个元素
+        MrzExerciseButton *m_pMrzExerciseButton = new MrzExerciseButton;
+        m_pMrzExerciseButton->setTitle(it->first);
+        //qDebug() << it->first << ":" << it->second;
+        m_pMrzExerciseButton->setStyleImage(it->second);
+        pExerciseButtonLyt->addWidget(m_pMrzExerciseButton);
     }
     pVMyExerciseLyt->addLayout(pExerciseButtonLyt);
 
@@ -88,31 +141,49 @@ void MrzMyExerciseWidget::initUi()
     QHBoxLayout *pSpecialExerciseButtonLyt = new QHBoxLayout;
     pSpecialExerciseButtonLyt->setContentsMargins(0, 0, 0, 0);
 
-    for (int i = 0; i < 3; ++i)
-    {
-        m_pMrzSpecialExerciseButton[i] = new MrzExerciseButton;
-        pSpecialExerciseButtonLyt->addWidget(m_pMrzSpecialExerciseButton[i]);
+    // 使用 QMap 存储数据
+    QMap<QString, QString> mapValueSpecialExercise;
+    mapValueSpecialExercise["模拟考试"] = ":/image/icon/practice_test.png";
+    mapValueSpecialExercise["章节练习"] = ":/image/icon/Exercise_chapter.png";
+    mapValueSpecialExercise["试卷回顾"] = ":/image/icon/exam_paper_review.png";
+
+    // 使用 QList 存储插入顺序
+    QList<QString> keys = mapValueSpecialExercise.keys();
+
+    // 按插入顺序遍历
+    for (const QString &key : keys) {
+        m_pMrzSpecialExerciseButton = new MrzExerciseButton;
+        m_pMrzSpecialExerciseButton->setTitle(key);
+
+        //qDebug() << key << ":" << mapValueSpecialExercise[key];
+        m_pMrzSpecialExerciseButton->setStyleImage(mapValueSpecialExercise[key]);
+        pSpecialExerciseButtonLyt->addWidget(m_pMrzSpecialExerciseButton);
     }
     pVSpecialExerciseLyt->addLayout(pSpecialExerciseButtonLyt);
 
     // 练习数据
     QWidget *pPracticeDataWgt = new QWidget(this);
     pPracticeDataWgt->setStyleSheet("QWidget{background-color: rgba(255,255,255,1);}");
-    // QHBoxLayout *pPracticeDataLyt = new QHBoxLayout(pPracticeDataWgt);
-    // pPracticeDataLyt->setContentsMargins(0, 0, 0, 0);
 
     QVBoxLayout *pVPracticeDataLyt = new QVBoxLayout(pPracticeDataWgt);
     pVPracticeDataLyt->setContentsMargins(0, 0, 0, 0);
 
+    QHBoxLayout *pPracticeDataLyt = new QHBoxLayout;
+    pPracticeDataLyt->setContentsMargins(0, 0, 0, 0);
     QLabel *pPracticeDataLbl = new QLabel(this);
     pPracticeDataLbl->setText("练习数据");
     pPracticeDataLbl->setFixedHeight(60);
-    pPracticeDataLbl->setStyleSheet(styleLabel);
-    pVPracticeDataLyt->addWidget(pPracticeDataLbl);
+    pPracticeDataLbl->setStyleSheet(stylePracticeData);
+    pPracticeDataLyt->addSpacing(20);
+    pPracticeDataLyt->addWidget(pPracticeDataLbl);
+    pPracticeDataLyt->addStretch();
+    pVPracticeDataLyt->addLayout(pPracticeDataLyt);
+    pVPracticeDataLyt->addSpacing(20);
 
     QHBoxLayout *pHPracticeDataLyt = new QHBoxLayout;
     pHPracticeDataLyt->setContentsMargins(0, 0, 0, 0);
     pVPracticeDataLyt->addLayout(pHPracticeDataLyt);
+    //pVPracticeDataLyt->addSpacing(5);
 
     // 当前练习
     QVBoxLayout *pVDayPracticeLyt = new QVBoxLayout;
@@ -123,13 +194,19 @@ void MrzMyExerciseWidget::initUi()
     pDayPracticeLyt->setContentsMargins(0, 0, 0, 0);
     QLabel *pDayPracticeTitleLbl = new QLabel(this);
     pDayPracticeTitleLbl->setText("当天练习");
+    pDayPracticeTitleLbl->setStyleSheet(stylePracticeDataLabel);
     QLabel *pDayPracticeTimeLbl = new QLabel(this);
     pDayPracticeTimeLbl->setText("8-17");
+    pDayPracticeTimeLbl->setStyleSheet(styleDayPracticeTime);
+    pDayPracticeLyt->addSpacing(20);
     pDayPracticeLyt->addWidget(pDayPracticeTitleLbl);
     pDayPracticeLyt->addWidget(pDayPracticeTimeLbl);
     pDayPracticeLyt->addStretch();
     pVDayPracticeLyt->addLayout(pDayPracticeLyt);
+    pVDayPracticeLyt->addSpacing(20);
 
+    QHBoxLayout *pTableWidgetLyt = new QHBoxLayout;
+    pTableWidgetLyt->setContentsMargins(0, 0, 0, 0);
     m_pTableWidget = new QTableWidget(this);
     m_pTableWidget->setFixedSize(600, 310);
     m_pTableWidget->setRowCount(7);   // 设置表格行数
@@ -145,13 +222,16 @@ void MrzMyExerciseWidget::initUi()
     QList<int> practiceCounts1 = {5, 8, 3, 6, 7, 9, 4};  // 练习次数
     QList<int> problemCounts1 = {10, 15, 8, 12, 14, 18, 9}; // 练习题数
 
-    for (int i = 0; i < dates.size(); ++i) {
+    for (int i = 0; i < dates.size(); ++i)
+    {
         m_pTableWidget->setItem(i, 0, new QTableWidgetItem(dates[i]));
         m_pTableWidget->setItem(i, 1, new QTableWidgetItem(QString::number(practiceCounts1[i])));
         m_pTableWidget->setItem(i, 2, new QTableWidgetItem(QString::number(problemCounts1[i])));
     }
 
-    pVDayPracticeLyt->addWidget(m_pTableWidget);
+    pTableWidgetLyt->addSpacing(20);
+    pTableWidgetLyt->addWidget(m_pTableWidget);
+    pVDayPracticeLyt->addLayout(pTableWidgetLyt);
 
     // 最近一周练习数据
     QVBoxLayout *pVLastWeekLyt = new QVBoxLayout;
@@ -164,8 +244,11 @@ void MrzMyExerciseWidget::initUi()
 
     QLabel *pLastWeekTitleLbl = new QLabel(this);
     pLastWeekTitleLbl->setText("最近一周练习数据");
+    pLastWeekTitleLbl->setStyleSheet(stylePracticeDataLabel);
     QLabel *pLastWeekTimeLbl = new QLabel(this);
     pLastWeekTimeLbl->setText("8-17~8-11");
+    pLastWeekTimeLbl->setStyleSheet(styleDayPracticeTime);
+    pLastWeekLyt->addSpacing(20);
     pLastWeekLyt->addWidget(pLastWeekTitleLbl);
     pLastWeekLyt->addWidget(pLastWeekTimeLbl);
     pLastWeekLyt->addStretch();

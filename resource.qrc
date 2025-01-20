@@ -31,5 +31,7 @@
         <file>image/icon/answer_status_current.png</file>
         <file>image/icon/answer_status_no.png</file>
         <file>image/icon/answer_status_ok.png</file>
+        <file>image/icon/person_student_image.png</file>
+        <file>image/button/personal_password.png</file>
     </qresource>
 </RCC>

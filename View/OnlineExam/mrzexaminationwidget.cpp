@@ -9,12 +9,14 @@ MrzExaminationWidget::MrzExaminationWidget(QWidget *parent)
     : QWidget{parent}
 {
     setMinimumSize(1440, 1024);
+    setStyleSheet("QWidget{background-color: rgba(246,250,255,1);}");
     initUi();
 }
 
 void MrzExaminationWidget::initUi()
 {
     QVBoxLayout *pMainLyt = new QVBoxLayout(this);
+    pMainLyt->setContentsMargins(0, 0, 0, 0);
 
     m_pExamPaperTitleWidget = new MrzExamPaperTitleWidget;
 
@@ -22,8 +24,10 @@ void MrzExaminationWidget::initUi()
     pExamPaperLyt->setContentsMargins(0, 0, 0, 0);
     m_pAnswerSheetWidget = new MrzAnswerSheetWidget;
     m_pExamPaperPageWidget = new MrzExamPaperPageWidget;
+    pExamPaperLyt->addStretch();
     pExamPaperLyt->addWidget(m_pAnswerSheetWidget);
     pExamPaperLyt->addWidget(m_pExamPaperPageWidget);
+    pExamPaperLyt->addStretch();
 
     pMainLyt->addWidget(m_pExamPaperTitleWidget);
     pMainLyt->addLayout(pExamPaperLyt);

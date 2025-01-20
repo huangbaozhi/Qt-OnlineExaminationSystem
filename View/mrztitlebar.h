@@ -15,6 +15,7 @@ public:
 signals:
     void signOnlineExam(QString OnlineExam);
     void signOnlineExercise(QString OnlineExercise);
+    void signPersonCenter(QString PersonCenter);
 
 private:
     void initUi();
@@ -26,8 +27,8 @@ private slots:
 private:
     QLabel          *m_pLogoLbl;
     QLabel          *m_pTitleLbl;
-    QLabel          *m_pProgressLbl;
 
+    QPushButton     *m_pPersonCenterBtn;
     QPushButton     *m_pOnlineExamBtn;
     QPushButton     *m_pOfflineExamBtn;
     QPushButton     *m_pExerciseOnlineBtn;
