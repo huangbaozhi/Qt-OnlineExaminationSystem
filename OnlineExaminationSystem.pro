@@ -1,4 +1,4 @@
-QT       += core gui charts
+QT       += core gui charts sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +22,9 @@ SOURCES += \
     View/OnlineExercise/mrzexercisebutton.cpp \
     View/OnlineExercise/mrzmyexercisewidget.cpp \
     View/OnlineExercise/mrzonlineexercisewidget.cpp \
+    View/PersonalCenter/mrzchangepasswordwidget.cpp \
+    View/PersonalCenter/mrzpersonalcenterwidget.cpp \
+    View/PersonalCenter/mrzpersonaldatawidget.cpp \
     View/mrztitlebar.cpp \
     View/subassembly/mrzcamerafacedisplaywidget.cpp \
     main.cpp \
@@ -41,6 +44,9 @@ HEADERS += \
     View/OnlineExercise/mrzexercisebutton.h \
     View/OnlineExercise/mrzmyexercisewidget.h \
     View/OnlineExercise/mrzonlineexercisewidget.h \
+    View/PersonalCenter/mrzchangepasswordwidget.h \
+    View/PersonalCenter/mrzpersonalcenterwidget.h \
+    View/PersonalCenter/mrzpersonaldatawidget.h \
     View/mrztitlebar.h \
     View/subassembly/mrzcamerafacedisplaywidget.h \
     mainwidget.h
