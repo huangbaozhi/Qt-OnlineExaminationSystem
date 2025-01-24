@@ -22,6 +22,7 @@ SOURCES += \
     View/OnlineExercise/mrzexercisebutton.cpp \
     View/OnlineExercise/mrzmyexercisewidget.cpp \
     View/OnlineExercise/mrzonlineexercisewidget.cpp \
+    View/PersonalCenter/FaceRecognition/mrzfacerecognitionwidget.cpp \
     View/PersonalCenter/mrzchangepasswordwidget.cpp \
     View/PersonalCenter/mrzpersonalcenterwidget.cpp \
     View/PersonalCenter/mrzpersonaldatawidget.cpp \
@@ -44,12 +45,30 @@ HEADERS += \
     View/OnlineExercise/mrzexercisebutton.h \
     View/OnlineExercise/mrzmyexercisewidget.h \
     View/OnlineExercise/mrzonlineexercisewidget.h \
+    View/PersonalCenter/FaceRecognition/mrzfacerecognitionwidget.h \
     View/PersonalCenter/mrzchangepasswordwidget.h \
     View/PersonalCenter/mrzpersonalcenterwidget.h \
     View/PersonalCenter/mrzpersonaldatawidget.h \
     View/mrztitlebar.h \
     View/subassembly/mrzcamerafacedisplaywidget.h \
     mainwidget.h
+
+
+win32{
+# 导入windows第三方库
+
+INCLUDEPATH += E:\Qt\openCV3.4.12\build\install\include\
+               E:\Qt\openCV3.4.12\build\install\include\opencv\
+               E:\Qt\openCV3.4.12\build\install\include\opencv2
+
+LIBS += -L E:\Qt\openCV3.4.12\build\install\x64\mingw\lib\libopencv_*.a
+}
+
+macx{
+QMAKE_CXXFLAGS += -x objective-c++
+# 导入mac第三方库
+}
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

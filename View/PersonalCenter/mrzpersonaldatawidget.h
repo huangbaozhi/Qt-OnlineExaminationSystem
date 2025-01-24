@@ -2,6 +2,7 @@
 #define MRZPERSONALDATAWIDGET_H
 
 #include <QWidget>
+#include <QAbstractButton>
 
 class QLabel;
 class QLineEdit;
@@ -9,6 +10,8 @@ class QRadioButton;
 class QPushButton;
 class QHBoxLayout;
 class QButtonGroup;
+class MrzFaceRecognitionDialog;
+class MrzFaceRecognitionWidget;
 
 class MrzPersonalDataWidget : public QWidget
 {
@@ -28,6 +31,7 @@ private:
 
 private slots:
     void saveDataInfo();
+    void slotFaceCollection(QAbstractButton *button);
 
 private:
 
@@ -50,6 +54,9 @@ private:
     QPushButton *m_pSaveBtn;
 
     QHBoxLayout *m_pCollectionLyt;
+
+    //MrzFaceRecognitionDialog *m_pMrzFaceRecognitionDialog;
+    MrzFaceRecognitionWidget *m_pMrzFaceRecognitionWidget;
 
 };
 

@@ -108,12 +108,12 @@ void MrzFaceRecognitionDialog::initUi()
 
     QHBoxLayout *pFaceCameraLyt = new QHBoxLayout;
     pFaceCameraLyt->setContentsMargins(0, 0, 0, 0);
-    MrzCameraFaceDisplayWidget *pFaceCameraWgt = new MrzCameraFaceDisplayWidget;
+    m_pFaceCameraWgt = new MrzCameraFaceDisplayWidget;
     //QWidget *pFaceCameraWgt = new QWidget(this);
-    pFaceCameraWgt->setFixedSize(250, 250);
-    pFaceCameraWgt->setStyleSheet("QWidget{background-color: rgba(17,18,14,1);border-radius: 230px;}");
+    m_pFaceCameraWgt->setFixedSize(250, 250);
+    m_pFaceCameraWgt->setStyleSheet("QWidget{background-color: rgba(17,18,14,1);border-radius: 230px;}");
     pFaceCameraLyt->addStretch();
-    pFaceCameraLyt->addWidget(pFaceCameraWgt);
+    pFaceCameraLyt->addWidget(m_pFaceCameraWgt);
     pFaceCameraLyt->addStretch();
 
     QHBoxLayout *pTipLyt = new QHBoxLayout;
@@ -227,11 +227,30 @@ void MrzFaceRecognitionDialog::initUi()
 void MrzFaceRecognitionDialog::connectFun()
 {
     connect(m_pStartVerificationBtn, &QPushButton::clicked, this, &MrzFaceRecognitionDialog::slotStartExam);
+    connect(this, &MrzFaceRecognitionDialog::signFaceImage, this, &MrzFaceRecognitionDialog::setImage);
 }
 
 void MrzFaceRecognitionDialog::slotStartExam()
 {
-    m_pExaminationWidget = new MrzExaminationWidget;
-    m_pExaminationWidget->show();
-    this->hide();
+    // 进入考试
+    // m_pExaminationWidget = new MrzExaminationWidget;
+    // m_pExaminationWidget->show();
+    // this->hide();
+
+    // 人脸采集
+    if (m_pStartVerificationBtn->text() == "采集")
+    {
+        emit signFaceCollection();
+    }
+}
+
+void MrzFaceRecognitionDialog::setConfirmButtonName(QString name)
+{
+    m_pStartVerificationBtn->setText(name);
+}
+
+void MrzFaceRecognitionDialog::setImage(const QImage &image)
+{
+    m_pFaceCameraWgt->setPixmap(QPixmap::fromImage(image));
+    //m_pFaceCameraWgt->setImage(image);
 }

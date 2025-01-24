@@ -1,4 +1,6 @@
 #include "mrzpersonaldatawidget.h"
+#include "View/OnlineExam/mrzfacerecognitiondialog.h"
+#include "View/PersonalCenter/FaceRecognition/mrzfacerecognitionwidget.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -11,6 +13,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QOverload>
 
 const QString styleLineEdit = QString("QLineEdit{"
                                    "line-height: 20px;"
@@ -54,6 +57,8 @@ const QString styleButton = QString("QPushButton{line-height: 17px;"
 
 MrzPersonalDataWidget::MrzPersonalDataWidget(QWidget *parent)
     : QWidget{parent}
+    //, m_pMrzFaceRecognitionDialog(new MrzFaceRecognitionDialog)
+    , m_pMrzFaceRecognitionWidget(new MrzFaceRecognitionWidget)
 {
     initUi();
 
@@ -128,7 +133,7 @@ void MrzPersonalDataWidget::initUi()
     int sexbutton = 0;
     for (const QString &option : sexOptions)
     {
-        qDebug()<<"[option]= " <<option << "[button]= "<<  sexbutton;
+        //qDebug()<<"[option]= " <<option << "[button]= "<<  sexbutton;
         m_pSexRadioButton = new QRadioButton(option, this);
         m_pSexRadioButton->setStyleSheet(styleRadion);
         m_pSexButtonGroup->addButton(m_pSexRadioButton, sexbutton);
@@ -301,7 +306,7 @@ void MrzPersonalDataWidget::initUi()
     int icollectionbutton = 0;
     for (const QString &collection : collectionOptions)
     {
-        qDebug() << "collectionOptions= " << collection << "button= " << icollectionbutton;
+        //qDebug() << "collectionOptions= " << collection << "button= " << icollectionbutton;
         m_pRadioButtonButton = new QRadioButton(collection, this);
         m_pRadioButtonButton->setStyleSheet(styleRadion);
         m_pCollectionButtonGroup->addButton(m_pRadioButtonButton, icollectionbutton);
@@ -378,7 +383,28 @@ void MrzPersonalDataWidget::initUi()
 
 void MrzPersonalDataWidget::connectFun()
 {
-   connect(m_pSaveBtn, &QPushButton::clicked, this, &MrzPersonalDataWidget::saveDataInfo);
+    //connect(m_pCollectionButtonGroup, &QButtonGroup::buttonClicked, this, &MrzPersonalDataWidget::slotFaceCollection);
+
+    connect(m_pSaveBtn, &QPushButton::clicked, this, &MrzPersonalDataWidget::saveDataInfo);
+    connect(m_pCollectionButtonGroup, &QButtonGroup::buttonClicked, this, &MrzPersonalDataWidget::slotFaceCollection);
+   // connect(m_pMrzFaceRecognitionDialog, &MrzFaceRecognitionDialog::signFaceCollection, this, )
+
+
+}
+
+void MrzPersonalDataWidget::slotFaceCollection(QAbstractButton *button)
+{
+    QButtonGroup *senderGroup = qobject_cast<QButtonGroup *>(sender());
+    if (senderGroup == m_pCollectionButtonGroup)
+    {
+        QString selectedOption = button->text();
+
+        if (selectedOption == "采集")
+        {
+            //m_pMrzFaceRecognitionDialog->setConfirmButtonName(selectedOption);
+            m_pMrzFaceRecognitionWidget->show();
+        }
+    }
 }
 
 void MrzPersonalDataWidget::createDatabase()
@@ -540,3 +566,5 @@ void MrzPersonalDataWidget::saveDataInfo()
         QMessageBox::critical(this, "错误", "保存数据失败!" );
     }
 }
+
+

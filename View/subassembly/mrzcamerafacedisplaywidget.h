@@ -3,8 +3,10 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QImage>
+#include <QLabel>
 
-class MrzCameraFaceDisplayWidget : public QWidget
+class MrzCameraFaceDisplayWidget : public QLabel
 {
     Q_OBJECT
 public:
@@ -12,8 +14,14 @@ public:
 
 signals:
 
+public:
+    void setImage(const QImage &image);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+private:
+    QImage m_image;
 };
 
 #endif // MRZCAMERAFACEDISPLAYWIDGET_H
