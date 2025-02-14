@@ -8,7 +8,7 @@ void MrzCameraFaceDisplayWidget::setImage(const QImage &image)
 {
     //m_image = image;
     //update(); // 触发重绘
-    // this->setPixmap(QPixmap::fromImage(image));
+    this->setPixmap(QPixmap::fromImage(image));
 }
 
 void MrzCameraFaceDisplayWidget::paintEvent(QPaintEvent *event)

@@ -43,7 +43,9 @@ private:
     QPushButton *m_pStartVerificationBtn;
 
     MrzExaminationWidget *m_pExaminationWidget;
-    MrzCameraFaceDisplayWidget *m_pFaceCameraWgt;
+    //MrzCameraFaceDisplayWidget *m_pFaceCameraWgt;
+
+    QLabel *m_pImageLabel;
 
 };
 

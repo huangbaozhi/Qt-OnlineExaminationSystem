@@ -9,6 +9,7 @@
 
 using namespace cv;
 using namespace cv::face;
+using namespace std;
 
 class MrzFaceRecognitionDialog;
 
@@ -33,7 +34,10 @@ private slots:
     // 打开摄像头并实时显示
     void startVideoStream();
 
+    void processFrame();
 
+    // 训练人脸识别模型
+    void trainFaceRecognizer();
 
 
 private:

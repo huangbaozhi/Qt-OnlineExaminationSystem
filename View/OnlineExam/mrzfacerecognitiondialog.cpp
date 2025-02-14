@@ -108,12 +108,17 @@ void MrzFaceRecognitionDialog::initUi()
 
     QHBoxLayout *pFaceCameraLyt = new QHBoxLayout;
     pFaceCameraLyt->setContentsMargins(0, 0, 0, 0);
-    m_pFaceCameraWgt = new MrzCameraFaceDisplayWidget;
-    //QWidget *pFaceCameraWgt = new QWidget(this);
-    m_pFaceCameraWgt->setFixedSize(250, 250);
-    m_pFaceCameraWgt->setStyleSheet("QWidget{background-color: rgba(17,18,14,1);border-radius: 230px;}");
+    // m_pFaceCameraWgt = new MrzCameraFaceDisplayWidget;
+    // //QWidget *pFaceCameraWgt = new QWidget(this);
+    // m_pFaceCameraWgt->setFixedSize(250, 250);
+    // m_pFaceCameraWgt->setStyleSheet("QWidget{background-color: rgba(17,18,14,1);border-radius: 230px;}");
+
+    m_pImageLabel = new QLabel;
+    m_pImageLabel->setFixedSize(250, 250);
+
     pFaceCameraLyt->addStretch();
-    pFaceCameraLyt->addWidget(m_pFaceCameraWgt);
+    //pFaceCameraLyt->addWidget(m_pFaceCameraWgt);
+    pFaceCameraLyt->addWidget(m_pImageLabel);
     pFaceCameraLyt->addStretch();
 
     QHBoxLayout *pTipLyt = new QHBoxLayout;
@@ -228,20 +233,24 @@ void MrzFaceRecognitionDialog::connectFun()
 {
     connect(m_pStartVerificationBtn, &QPushButton::clicked, this, &MrzFaceRecognitionDialog::slotStartExam);
     connect(this, &MrzFaceRecognitionDialog::signFaceImage, this, &MrzFaceRecognitionDialog::setImage);
+
 }
 
 void MrzFaceRecognitionDialog::slotStartExam()
 {
+    emit signFaceCollection();
+
+    qDebug()<<"[MrzFaceRecognitionDialog::slotStartExam]=== ";
     // 进入考试
     // m_pExaminationWidget = new MrzExaminationWidget;
     // m_pExaminationWidget->show();
     // this->hide();
 
     // 人脸采集
-    if (m_pStartVerificationBtn->text() == "采集")
-    {
-        emit signFaceCollection();
-    }
+    // if (m_pStartVerificationBtn->text() == "采集")
+    // {
+    //     emit signFaceCollection();
+    // }
 }
 
 void MrzFaceRecognitionDialog::setConfirmButtonName(QString name)
@@ -251,6 +260,7 @@ void MrzFaceRecognitionDialog::setConfirmButtonName(QString name)
 
 void MrzFaceRecognitionDialog::setImage(const QImage &image)
 {
-    m_pFaceCameraWgt->setPixmap(QPixmap::fromImage(image));
+    m_pImageLabel->setPixmap(QPixmap::fromImage(image));
     //m_pFaceCameraWgt->setImage(image);
+    m_pImageLabel->setScaledContents(true);
 }
