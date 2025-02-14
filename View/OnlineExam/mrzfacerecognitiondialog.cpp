@@ -240,7 +240,6 @@ void MrzFaceRecognitionDialog::slotStartExam()
 {
     emit signFaceCollection();
 
-    qDebug()<<"[MrzFaceRecognitionDialog::slotStartExam]=== ";
     // 进入考试
     // m_pExaminationWidget = new MrzExaminationWidget;
     // m_pExaminationWidget->show();

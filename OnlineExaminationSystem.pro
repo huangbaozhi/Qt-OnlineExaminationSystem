@@ -1,4 +1,4 @@
-QT       += core gui charts sql
+QT       += core gui charts sql multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,6 +9,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Common/mrzglobalclass.cpp \
+    Model/DataStorage/mrzsqldatastorage.cpp \
+    View/LoginWidgets/mrzlogindialog.cpp \
     View/OnlineExam/mrzanswersheetwidget.cpp \
     View/OnlineExam/mrzexaminationwidget.cpp \
     View/OnlineExam/mrzexampaperpagewidget.cpp \
@@ -32,6 +35,9 @@ SOURCES += \
     mainwidget.cpp
 
 HEADERS += \
+    Common/mrzglobalclass.h \
+    Model/DataStorage/mrzsqldatastorage.h \
+    View/LoginWidgets/mrzlogindialog.h \
     View/OnlineExam/mrzanswersheetwidget.h \
     View/OnlineExam/mrzexaminationwidget.h \
     View/OnlineExam/mrzexampaperpagewidget.h \

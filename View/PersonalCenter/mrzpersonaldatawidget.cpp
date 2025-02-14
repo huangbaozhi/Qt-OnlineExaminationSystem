@@ -1,6 +1,8 @@
 #include "mrzpersonaldatawidget.h"
 #include "View/OnlineExam/mrzfacerecognitiondialog.h"
 #include "View/PersonalCenter/FaceRecognition/mrzfacerecognitionwidget.h"
+#include "Model/DataStorage/mrzsqldatastorage.h"
+#include "Common/mrzglobalclass.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -65,7 +67,7 @@ MrzPersonalDataWidget::MrzPersonalDataWidget(QWidget *parent)
     connectFun();
 
     // create the database connection
-    createDatabase();
+    //createDatabase();
 
     // Load data from database
     loadDataFromDatabase();
@@ -403,6 +405,9 @@ void MrzPersonalDataWidget::slotFaceCollection(QAbstractButton *button)
         {
             //m_pMrzFaceRecognitionDialog->setConfirmButtonName(selectedOption);
             m_pMrzFaceRecognitionWidget->show();
+            //m_faceDataByteArray = m_pMrzFaceRecognitionWidget->getSaveFaceToDatabase();
+            //qDebug() << "MrzPersonalDataWidget::slotFaceCollection11111111= " << m_faceDataByteArray;
+
         }
     }
 }
@@ -428,7 +433,8 @@ void MrzPersonalDataWidget::createDatabase()
                "gender TEXT, "
                "group_type TEXT, "
                "face_collection TEXT, "
-               "player_type TEXT)");
+               "player_type TEXT, "
+               "face_data BLOB)");
 }
 
 void MrzPersonalDataWidget::loadDataFromDatabase()
@@ -465,7 +471,7 @@ void MrzPersonalDataWidget::loadDataFromDatabase()
         }
 
         // 读取人脸采集
-        QString faceCollection = query.value("face_collection").toString();
+        QString faceCollection = query.value("collection_face").toString();
         if (faceCollection == "采集")
         {
             m_pCollectionButtonGroup->button(0)->setChecked(true);
@@ -530,41 +536,53 @@ void MrzPersonalDataWidget::saveDataInfo()
         return;
     }
 
-    // Insert data into the database
-    QSqlQuery query;
-    query.prepare("INSERT INTO registration (name, phone, email, id_card, school, gender, group_type, face_collection, player_type) "
-                  "VALUES (:name, :phone, :email, :id_card, :school, :gender, :group, :face, :player)");
-    query.bindValue(":name", name);
-    query.bindValue(":phone", phone);
-    query.bindValue(":email", email);
-    query.bindValue(":id_card", idCard);
-    query.bindValue(":school", school);
-    query.bindValue(":gender", gender);
-    query.bindValue(":group", group);
-    query.bindValue(":face", face);
-    query.bindValue(":player", playerType);
+    MrzGlobalClass::instance()->setName(name);
+    MrzGlobalClass::instance()->setPhone(phone);
+    MrzGlobalClass::instance()->setMail(email);
+    MrzGlobalClass::instance()->setSchool(school);
+    MrzGlobalClass::instance()->setSex(gender);
+    MrzGlobalClass::instance()->setGroup(group);
+    MrzGlobalClass::instance()->setIDNumber(idCard);
+    MrzGlobalClass::instance()->setFaceCollection(face);
+    MrzGlobalClass::instance()->setPlayerType(playerType);
 
+    MrzSqlDataStorage::instance()->writeDatebase();
+
+    // // Insert data into the database
     // QSqlQuery query;
-    // query.prepare("INSERT INTO registration (name, phone, email, id_card, school, gender, group_type, face_collection, player_type) "
-    //               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    // query.addBindValue(name);
-    // query.addBindValue(phone);
-    // query.addBindValue(email);
-    // query.addBindValue(idCard);
-    // query.addBindValue(school);
-    // query.addBindValue(gender);
-    // query.addBindValue(group);
-    // query.addBindValue(face);
-    // query.addBindValue(playerType);
+    // query.prepare("INSERT INTO registration (name, phone, email, id_card, school, gender, group_type, collection_face, player_type, face_data) "
+    //               "VALUES (:name, :phone, :email, :id_card, :school, :gender, :group, :collection, :player, :face)");
+    // query.bindValue(":name", name);
+    // query.bindValue(":phone", phone);
+    // query.bindValue(":email", email);
+    // query.bindValue(":id_card", idCard);
+    // query.bindValue(":school", school);
+    // query.bindValue(":gender", gender);
+    // query.bindValue(":group", group);
+    // query.bindValue(":collection", face);
+    // query.bindValue(":player", playerType);
 
-    if (query.exec())
-    {
-        QMessageBox::information(this, "成功", "数据保存成功!");
-    }
-    else
-    {
-        QMessageBox::critical(this, "错误", "保存数据失败!" );
-    }
+    // // QSqlQuery query;
+    // // query.prepare("INSERT INTO registration (name, phone, email, id_card, school, gender, group_type, face_collection, player_type) "
+    // //               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // // query.addBindValue(name);
+    // // query.addBindValue(phone);
+    // // query.addBindValue(email);
+    // // query.addBindValue(idCard);
+    // // query.addBindValue(school);
+    // // query.addBindValue(gender);
+    // // query.addBindValue(group);
+    // // query.addBindValue(face);
+    // // query.addBindValue(playerType);
+
+    // if (query.exec())
+    // {
+    //     QMessageBox::information(this, "成功", "数据保存成功!");
+    // }
+    // else
+    // {
+    //     QMessageBox::critical(this, "错误", "保存数据失败!" );
+    // }
 }
 
 

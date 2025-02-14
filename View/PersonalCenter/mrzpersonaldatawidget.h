@@ -58,6 +58,8 @@ private:
     //MrzFaceRecognitionDialog *m_pMrzFaceRecognitionDialog;
     MrzFaceRecognitionWidget *m_pMrzFaceRecognitionWidget;
 
+    QByteArray m_faceDataByteArray;
+
 };
 
 #endif // MRZPERSONALDATAWIDGET_H

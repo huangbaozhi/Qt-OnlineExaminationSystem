@@ -6,6 +6,7 @@
 #include <opencv2/face.hpp>
 #include <QImage>
 #include <QPixmap>
+#include <QTimer>
 
 using namespace cv;
 using namespace cv::face;
@@ -21,6 +22,9 @@ public:
 
 signals:
     void signShowFaceImage(QImage image);
+
+public:
+    QByteArray getSaveFaceToDatabase();
 
 private:
     void initUi();
@@ -39,6 +43,9 @@ private slots:
     // 训练人脸识别模型
     void trainFaceRecognizer();
 
+    void saveFaceToDatabase(const Mat &faceImg, const QString &name);
+
+
 
 private:
     cv::VideoCapture cap;                           // 用于视频捕捉
@@ -48,6 +55,10 @@ private:
     std::vector<int> labels;                        // 存储图像对应的标签
 
     MrzFaceRecognitionDialog *m_pFaceRecognitionDialog;
+
+    QTimer *timer;
+
+    QByteArray m_faceDataByteArray;
 
 };
 

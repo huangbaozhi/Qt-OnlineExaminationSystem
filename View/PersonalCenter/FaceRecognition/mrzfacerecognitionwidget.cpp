@@ -1,5 +1,6 @@
 #include "mrzfacerecognitionwidget.h"
 #include "View/OnlineExam/mrzfacerecognitiondialog.h"
+#include "Common/mrzglobalclass.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -47,15 +48,15 @@ void MrzFaceRecognitionWidget::initUi()
     pMainLyt->addWidget(m_pFaceRecognitionDialog);
 
     // 采集人脸
-    // QTimer *timer = new QTimer(this);
-    // connect(timer, &QTimer::timeout, this, &MrzFaceRecognitionWidget::startVideoStream);
-    // timer->start(30); // 每30毫秒更新一次
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MrzFaceRecognitionWidget::startVideoStream);
+    timer->start(30); // 每30毫秒更新一次
 
     // 设置定时器每隔 30 毫秒触发一次
-    QTimer *timer = new QTimer(this);
-    //connect(timer, &QTimer::timeout, this, &MainWindow::updateFrame);
-    connect(timer, &QTimer::timeout, this, &MrzFaceRecognitionWidget::processFrame);
-    timer->start(30);  // 每 30 毫秒捕获一次图像帧
+    // QTimer *timer = new QTimer(this);
+    // //connect(timer, &QTimer::timeout, this, &MainWindow::updateFrame);
+    // connect(timer, &QTimer::timeout, this, &MrzFaceRecognitionWidget::processFrame);
+    // timer->start(30);  // 每 30 毫秒捕获一次图像帧
 
     // 训练人脸识别模型
     trainFaceRecognizer();
@@ -92,7 +93,7 @@ void MrzFaceRecognitionWidget::slotFaceCollection()
         images.push_back(targetFace);
         labels.push_back(1);  // 假设是第1号人的脸
 
-        //saveFaceToDatabase(targetFace, "New Person");
+        saveFaceToDatabase(targetFace, "New Person");
 
         // 显示人脸图像
         QImage img = QImage(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
@@ -100,6 +101,10 @@ void MrzFaceRecognitionWidget::slotFaceCollection()
         connect(this, &MrzFaceRecognitionWidget::signShowFaceImage, m_pFaceRecognitionDialog, &MrzFaceRecognitionDialog::signFaceImage);
         //ui->imageLabel->setPixmap(QPixmap::fromImage(img));
     }
+
+    timer->stop();
+    this->close();  // 人脸采集完成，关闭人脸采集窗口
+    cap.release();  // 人脸采集完成，关闭相机
 }
 
 void MrzFaceRecognitionWidget::startVideoStream()
@@ -215,6 +220,46 @@ void MrzFaceRecognitionWidget::trainFaceRecognizer()
     model->train(images, labels);
     model->save("face_model.xml");  // 保存训练好的模型
     qDebug() << "Training complete and model saved!";
+}
+
+void MrzFaceRecognitionWidget::saveFaceToDatabase(const Mat &faceImg, const QString &name)
+{
+    qDebug()<<"MainWindow::saveFaceToDatabase!!!!";
+    // 将人脸图像转换为二进制格式
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    QImage img = matToQImage(faceImg);
+    img.save(&buffer, "PNG");
+
+    MrzGlobalClass::instance()->setFaceData(byteArray);
+
+    //m_faceDataByteArray = byteArray;
+    //qDebug()<<"MainWindow::saveFaceToDatabase!!!!" << m_faceDataByteArray;
+
+    // // 保存到数据库
+    // QSqlDatabase db = QSqlDatabase::database();
+    // if (!db.isOpen()) {
+    //     qDebug() << "Database is not open!";
+    //     return;
+    // }
+
+    // // Insert data into the database
+    // QSqlQuery query;
+    // query.prepare("INSERT INTO registration (name, phone, email, id_card, school, gender, group_type, collection_face, player_type, face_data) "
+    //               "VALUES (:name, :phone, :email, :id_card, :school, :gender, :group, :collection, :player, :face)");
+    // query.bindValue(":face", byteArray);
+
+    // if (!query.exec()) {
+    //     qDebug() << "Error saving face to database!";
+    // } else {
+    //     qDebug() << "Face saved to database!";
+    // }
+}
+
+QByteArray MrzFaceRecognitionWidget::getSaveFaceToDatabase()
+{
+    return m_faceDataByteArray;
 }
 
 QImage MrzFaceRecognitionWidget::matToQImage(const Mat &mat)
