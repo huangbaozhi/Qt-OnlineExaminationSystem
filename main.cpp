@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     if(res == QDialog::Accepted)
     {
         MainWidget *mainWidget = new MainWidget;
-        mainWidget->setWindowIcon(QIcon(""));
+        mainWidget->setWindowIcon(QIcon(":/image/logo.ico"));
         mainWidget->show();
     }
     else
