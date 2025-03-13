@@ -5,6 +5,7 @@
 #include <QPushButton>
 
 class QLabel;
+class MrzExaminationWidget;
 
 class MrzMyGameWidget : public QWidget
 {
@@ -25,6 +26,9 @@ private:
     void initUi(const QString &title, const QDateTime &startTime, const QDateTime &endTime, int duration, int questions, int score);
     void connectFun();
 
+private slots:
+    void slotExaminationWidget();
+
 private:
     QPushButton *m_pButton;
 
@@ -35,6 +39,8 @@ private:
     QLabel      *m_pExamTimeLbl;
     QLabel      *m_pProblemNumLbl;
     QLabel      *m_pMarkLbl;
+
+    MrzExaminationWidget *m_pExaminationWidget;
 
 };
 

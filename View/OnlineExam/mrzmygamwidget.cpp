@@ -1,4 +1,5 @@
 #include "mrzmygamwidget.h"
+#include "View/OnlineExam/mrzexaminationwidget.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -361,7 +362,17 @@ void MrzMyGameWidget::initUi(const QString &title, const QDateTime &startTime, c
 
 void MrzMyGameWidget::connectFun()
 {
-    connect(m_pButton, &QPushButton::clicked, this, &MrzMyGameWidget::signEnterExaminationRoom);
+    // 人脸识别
+    //connect(m_pButton, &QPushButton::clicked, this, &MrzMyGameWidget::signEnterExaminationRoom);
+
+    // 直接进入考试界面
+    connect(m_pButton, &QPushButton::clicked, this, &MrzMyGameWidget::slotExaminationWidget);
+}
+
+void MrzMyGameWidget::slotExaminationWidget()
+{
+    m_pExaminationWidget = new MrzExaminationWidget;
+    m_pExaminationWidget->show();
 }
 
 void MrzMyGameWidget::setExamTitleName(QString title)
